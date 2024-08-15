@@ -12,64 +12,52 @@ function ensureUserSignedIn() {
           console.error("User is not signed in or didn't grant permission.");
         } else {
           console.log("User signed in and permission granted. Token:", token);
-          // Save the token or use it as needed
+          getTodayEvents(token);
         }
       });
     } else {
       console.log("Token retrieved silently:", token);
-      // Use the token as needed
+      getTodayEvents(token);
     }
   });
 }
 
-
-// Check whether the user gave permission to access Google Calendar when the extension is opened
-chrome.runtime.onStartup.addListener(() => {
-  ensureUserSignedIn();
-});
-
-function ensureUserSignedIn() {
-  chrome.identity.getAuthToken({ 'interactive': false }, function(token) {
-    if (chrome.runtime.lastError || !token) {
-      // If there's an error (user not signed in), we request interactively
-      chrome.identity.getAuthToken({ 'interactive': true }, function(token) {
-        if (chrome.runtime.lastError || !token) {
-          console.error("User is not signed in or didn't grant permission.");
-        } else {
-          console.log("User signed in and permission granted. Token:", token);
-          // Save the token or use it as needed
-        }
-      });
-    } else {
-      console.log("Token retrieved silently:", token);
-      // Use the token as needed
-    }
+function getTodayEvents(token) {
+  const headers = new Headers({
+    'Authorization': 'Bearer ' + token,
+    'Content-Type': 'application/json'
   });
-}
 
-function sendMessageToPopup(message) {
-  chrome.runtime.sendMessage(message);
-}
+  const today = new Date();
+  const timeMin = new Date(today.setHours(0, 0, 0, 0)).toISOString(); // Start of today
+  const timeMax = new Date(today.setHours(23, 59, 59, 999)).toISOString(); // End of today
 
-chrome.identity.getAuthToken({ 'interactive': false }, function(token) {
-    console.log(token);
-    sendMessageToPopup({ token });
+  const url = `https://www.googleapis.com/calendar/v3/calendars/primary/events?timeMin=${encodeURIComponent(timeMin)}&timeMax=${encodeURIComponent(timeMax)}&singleEvents=true&orderBy=startTime`;
 
-    const headers = new Headers({
-        'Authorization' : 'Bearer ' + token,
-        'Content-Type': 'application/json'
-    })
-  
-    const queryParams = { headers };
-  
-    fetch('https://www.googleapis.com/calendar/v3/calendars/primary/events', queryParams)
-    .then((response) => response.json()) // Transform the data into json
+  fetch(url, { headers })
+    .then((response) => response.json())
     .then(function(data) {
-        console.log(data);
-        sendMessageToPopup({ events: data.items });
+      console.log("Today's events:", data.items);
+      sendMessageToPopup({ events: data.items });
     })
     .catch(error => {
       console.error("Error fetching calendar events:", error);
       sendMessageToPopup({ error: "Error fetching calendar events." });
     });
+}
+
+
+// Send message to the popup
+function sendMessageToPopup(message) {
+  chrome.runtime.sendMessage(message);
+}
+
+// Trigger ensureUserSignedIn on startup
+chrome.runtime.onStartup.addListener(() => {
+  ensureUserSignedIn();
+});
+
+// Trigger ensureUserSignedIn on installation
+chrome.runtime.onInstalled.addListener(() => {
+  ensureUserSignedIn();
 });
