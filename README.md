@@ -16,21 +16,6 @@ With just a click, you can copy the details of your scheduled events directly to
 1. **Authentication:** The extension automatically uses your Google account credentials to access your Google Calendar events. It handles user authentication using OAuth2.
 2. **Event Fetching:** It fetches events either for the current day or the most recent events added in the last hour.
 3. **Copy Functionality:** Each event is presented with a "Copy" button, which copies the event title and time to your clipboard for easy transfer to other apps.
-   
-## Installation
-1. Download the extension from the Chrome Web Store (link to be added).
-2. Once installed, click the extension icon in the Chrome toolbar.
-3. Sign in with your Google account to grant access to your Google Calendar.
-4. Start fetching events and copy them to your clipboard!
-
-## Usage
-- After installing, open the extension and allow access to your Google Calendar.
-- **To fetch today's events:** Click the extension icon, and it will display a list of today's events.
-- **To fetch recent events:** Click the “Fetch Recent Events” button to get events added within the past hour.
-- Use the **Copy** button next to any event to quickly copy it to your clipboard.
-
-## Demo
-![Demo GIF](demo.gif) _(Add your GIF demonstrating the extension)_
 
 ## Files Overview
 - **background.js:** Handles authentication, fetching calendar events, and managing user sessions.
