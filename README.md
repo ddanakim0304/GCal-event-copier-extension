@@ -1,5 +1,5 @@
-# GoogleCalendar <> TODO List
 # GCAL Event Copier Extension
+![Convert to GIF project Sep 07](https://github.com/user-attachments/assets/168d60fb-4285-47ac-b847-e8bb86b51807)
 
 ## Overview
 **GCAL Event Copier Extension** is a Google Chrome extension that allows you to easily fetch and copy your Google Calendar events for pasting into your to-do lists or task management apps. This extension simplifies the process of transferring event information such as titles and times from your Google Calendar to your preferred to-do list or productivity tool.
@@ -10,8 +10,6 @@ With just a click, you can copy the details of your scheduled events directly to
 - **Fetch Today's Events:** Display and copy all Google Calendar events scheduled for today.
 - **Fetch Recent Events:** Get newly added events within the last hour.
 - **Copy Events:** Quickly copy the title and time of any event with a single click, making it easy to transfer to other apps.
-
-A demo GIF of the extension in action will be added here.
 
 ## How It Works
 1. **Authentication:** The extension automatically uses your Google account credentials to access your Google Calendar events. It handles user authentication using OAuth2.
