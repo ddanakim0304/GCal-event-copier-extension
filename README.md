@@ -48,6 +48,3 @@ With just a click, you can copy the details of your scheduled events directly to
 
 ## Contributing
 Feel free to submit issues or pull requests if you'd like to contribute to this project. Feedback and improvements are welcome!
-
-## License
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
