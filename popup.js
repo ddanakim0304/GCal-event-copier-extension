@@ -1,12 +1,14 @@
 document.addEventListener('DOMContentLoaded', function() {
-  const tokensDiv = document.getElementById("tokens");
-  const fetchRecentEventsButton = document.getElementById("fetchRecentEvents");
+    const tokensDiv = document.getElementById("tokens");
+    const fetchRecentEventsButton = document.getElementById("fetchRecentEvents");
+    const logoutButton = document.getElementById("logoutButton");
+  
+    // Display the existing events when the popup loads
+    chrome.runtime.sendMessage('getEvents', (events) => {
+        displayEvents(events, tokensDiv);
+    });
 
-  // Display the existing events when the popup loads
-  chrome.runtime.sendMessage('getEvents', (events) => {
-      displayEvents(events, tokensDiv);
-  });
-
+    
   // Add an event listener for the "Fetch Recent Events" button
 fetchRecentEventsButton.addEventListener('click', function() {
     // Check if the recent events section already exists, if so, remove it
@@ -33,6 +35,19 @@ fetchRecentEventsButton.addEventListener('click', function() {
         tokensDiv.appendChild(recentEventsDiv);
     });
 });
+
+logoutButton.addEventListener('click', function() {
+    chrome.identity.getAuthToken({ interactive: false }, function(token) {
+      if (!chrome.runtime.lastError && token) {
+        chrome.identity.removeCachedAuthToken({ token: token }, function() {
+          alert('You have been logged out.');
+          tokensDiv.innerHTML = '<p>You are logged out. Please sign in again to view events.</p>';
+        });
+      } else {
+        alert('No active session found.');
+      }
+    });
+  });
 
 // Function to display events in the specified container
 function displayEvents(events, container) {
