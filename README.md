@@ -1,5 +1,6 @@
 # GCAL Event Copier Extension
-![Uploading gcal_demo_final.gif…]()
+![gcal_demo_final](https://github.com/user-attachments/assets/1bb5e82a-ce7d-4b6a-bb96-55122d5f5026)
+
 
 
 ## Overview
