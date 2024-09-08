@@ -65,7 +65,11 @@ function displayEvents(events, container) {
 
             // Add an event listener to copy the title to the clipboard
             copyButton.addEventListener('click', function() {
-                navigator.clipboard.writeText(title.textContent)
+                navigator.clipboard.writeText(title.textContent);
+                copyButton.textContent = 'Copied!';    
+                setTimeout(function() {
+                    copyButton.textContent = 'Copy';
+                }, 500); // 1000 milliseconds = 1 second
             });
 
             eventElement.appendChild(title);
